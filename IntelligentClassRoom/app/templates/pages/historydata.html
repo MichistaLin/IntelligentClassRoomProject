@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="icon" href="{{ url_for('static', filename='dist/img/favicon-32x32.png') }}" sizes="32x32" type="image/png">
+  <link rel="icon" href="{{ url_for('static', filename='dist/img/favicon-16x16.png') }}" sizes="16x16" type="image/png">
+  <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <meta name="author" content="ajiho">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-icons/font/bootstrap-icons.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/dist/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/bootstrap-admin.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-select/dist/css/bootstrap-select.min.css') }}">
+  <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+</head>
+<body class="bg-body-tertiary py-3">
+<div class="container-fluid">
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-body py-3">
+      <form class="row row-cols-sm-auto g-3 align-items-center" action="#">
+        <div class="col-12">
+          <div class="row">
+            <label for="name" class="col-sm-auto col-form-label">历史数据</label>
+            <div class="col">
+                <select class="selectpicker">
+                    <option data-id="1">一天内的数据</option>
+                    <option data-id="3">三天内的数据</option>
+                    <option data-id="7">七天内的数据</option>
+                </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 gap-2">
+          <button type="button" class="btn btn-light bsa-querySearch-btn">确定</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="row row-cols-1 row-cols-lg-2 g-3">
+        <div class="col">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-body ">
+                    <i class="bi bi-thermometer-sun fs-1 text-danger"></i>
+                </div>
+                <div class="card-body">
+                    <div id="echarts1" style="width: 100%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-body ">
+                    <i class="bi bi-droplet-half fs-1 text-info"></i>
+                </div>
+                <div class="card-body">
+                    <div id="echarts2" style="width: 100%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-body ">
+                    <i class="bi bi-speedometer fs-1 text-primary"></i>
+                </div>
+                <div class="card-body">
+                    <div id="echarts3" style="width: 100%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-body ">
+                    <i class="bi bi-brightness-high-fill fs-1 text-success"></i>
+                </div>
+                <div class="card-body">
+                    <div id="echarts4" style="width: 100%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+<!--回到顶部开始-->
+<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+<!--回到顶部结束-->
+
+
+<script src="{{ url_for('static', filename='lib/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/js/bootstrap-admin.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/echarts/dist/echarts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/js/app.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+
+
+<script>
+    let echarts1, echarts2, echarts3, echarts4;
+    makeChart = function (selector, title, data, legend, ylabel, type, color) {
+        let chart = echarts.init(document.getElementById(selector));
+        chart.setOption({
+            title: {
+                text: title
+            },
+            tooltip: {},
+            legend: {
+                data: [{
+                    name: legend,
+                    itemStyle: {
+                        opacity: 0,
+                    }
+                }]
+            },
+            xAxis: {
+                data: data.date
+            },
+            yAxis: {
+                name: ylabel
+            },
+            series: [
+                {
+                    name: legend,
+                    type: type,
+                    symbol: 'none',
+                    color: color,
+                    data: data.data
+                }
+            ]
+        });
+        return chart;
+    }
+
+  $(function () {
+
+    {# 初始化图表，默认是今天的数据 #}
+    $.ajax({
+        url: "/gethistory?value=1",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            echarts1 = makeChart('echarts1', '温度变化图', data.temp, '温度', '温度（℃）', 'line', "#dc3545")
+            echarts2 = makeChart('echarts2', '湿度变化图', data.humid, '湿度', '湿度（%）', 'line', "#0dcaf0")
+            echarts3 = makeChart('echarts3', '气压变化图', data.airp, '气压', '气压（atm）', 'line')
+            echarts4 = makeChart('echarts4', '光照变化图', data.light, '光照', '光照（lx）', 'line', "#198754")
+        }
+    })
+
+    {# 监听确认按钮 #}
+    document.querySelector(".bsa-querySearch-btn").addEventListener("click", function () {
+        let select = document.querySelector(".selectpicker");
+        let value = select.options[select.selectedIndex].dataset.id;
+        let url = "/gethistory?value=" + value;
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                echarts1 = makeChart('echarts1', '温度变化图', data.temp, '温度', '温度（℃）', 'line', "#dc3545")
+                echarts2 = makeChart('echarts2', '湿度变化图', data.humid, '湿度', '湿度（%）', 'line', "#0dcaf0")
+                echarts3 = makeChart('echarts3', '气压变化图', data.airp, '气压', '气压（atm）', 'line')
+                echarts4 = makeChart('echarts4', '光照变化图', data.light, '光照', '光照（lx）', 'line', "#198754")
+                Swal.fire({
+                    icon: 'success',
+                    title: '查询成功',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            }
+        })
+    });
+
+
+  });
+
+    //这里是响应式处理
+    window.onresize = function () {
+        echarts1.resize();
+        echarts2.resize();
+        echarts3.resize();
+        echarts4.resize();
+    };
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" href="{{ url_for('static', filename='dist/img/favicon-32x32.png') }}" sizes="32x32" type="image/png">
+    <link rel="icon" href="{{ url_for('static', filename='dist/img/favicon-16x16.png') }}" sizes="16x16" type="image/png">
+    <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+    <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+    <meta name="author" content="ajiho">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-icons/font/bootstrap-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/bootstrap-admin.min.css') }}">
+    <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+</head>
+<body class="bg-body-tertiary py-3">
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-lg-2 g-3">
+        <div class="col">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-body ">
+                    <i class="bi bi-thermometer-sun fs-1 text-danger"></i>
+                </div>
+                <div class="card-body">
+                    <div id="echarts1" style="width: 100%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-body ">
+                    <i class="bi bi-droplet-half fs-1 text-info"></i>
+                </div>
+                <div class="card-body">
+                    <div id="echarts2" style="width: 100%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-body ">
+                    <i class="bi bi-speedometer fs-1 text-primary"></i>
+                </div>
+                <div class="card-body">
+                    <div id="echarts3" style="width: 100%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-body ">
+                    <i class="bi bi-brightness-high-fill fs-1 text-success"></i>
+                </div>
+                <div class="card-body">
+                    <div id="echarts4" style="width: 100%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--回到顶部开始-->
+<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+<!--回到顶部结束-->
+
+<script src="{{ url_for('static', filename='lib/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/echarts/dist/echarts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/js/bootstrap-admin.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/js/app.js') }}"></script>
+<!--假数据模拟,生产环境中请直接删除该js-->
+<script src="{{ url_for('static', filename='dist/js/bootstrap-admin.mock.js') }}"></script>
+<script>
+
+    makeChart = function (selector, title, data, legend, ylabel, type, color="#5776d1") {
+        let chart = echarts.init(document.getElementById(selector));
+        chart.setOption({
+            title: {
+                text: title
+            },
+            tooltip: {},
+            legend: {
+                data: [{
+                    name:legend,
+                }]
+            },
+            xAxis: {
+                data: data.date
+            },
+            yAxis: {
+                name: ylabel
+            },
+            series: [
+                {
+                    name: legend,
+                    type: type,
+                    color: color,
+                    data: data.data
+                }
+            ]
+        });
+        return chart;
+    }
+
+    let echarts1, echarts2, echarts3, echarts4;
+
+    $(function () {
+        {# 每隔5秒向后端请求一次数据 #}
+        setInterval(function () {
+            {# 向后端发送请求 #}
+            data = {
+                "total":20
+            }
+
+            $.get("http://127.0.0.1:5000/getdata/", data, function (res) {
+                echarts1 = makeChart('echarts1', '温度变化图', res.temp, '温度', '温度（℃）', 'line', "#dc3545")
+                echarts2 = makeChart('echarts2', '湿度变化图', res.humid, '湿度', '湿度（%）', 'line', "#0dcaf0")
+                echarts3 = makeChart('echarts3', '气压变化图', res.airp, '气压', '气压（atm）', 'line')
+                echarts4 = makeChart('echarts4', '光照变化图', res.light, '光照', '光照（lx）', 'line', "#198754")
+                })
+            }, 2000);
+    })
+
+    //这里是响应式处理
+    window.onresize = function () {
+        echarts1.resize();
+        echarts2.resize();
+        echarts3.resize();
+        echarts4.resize();
+    };
+</script>
+</body>
+</html>

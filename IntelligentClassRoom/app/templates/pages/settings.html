@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="icon" href="{{ url_for('static', filename='dist/img/favicon-32x32.png') }}" sizes="32x32" type="image/png">
+  <link rel="icon" href="{{ url_for('static', filename='dist/img/favicon-16x16.png') }}" sizes="16x16" type="image/png">
+  <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <meta name="author" content="ajiho">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-icons/font/bootstrap-icons.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/dist/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/bootstrap-admin.min.css') }}">
+  <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+</head>
+<body class="bg-body-tertiary py-3">
+<div class="container-fluid">
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="me-1">
+              <h6 class="mb-2 bsa-ellipsis-1 ">温度（℃）</h6>
+              <div class="bd-highlight mb-3" id="d1">
+                <h4 class="mb-1 bsa-ellipsis-1 p-2 bd-highlight">25</h4>
+                <h5 class="p-2 bd-highlight"></h5>
+              </div>
+
+            </div>
+            <i class="bi bi-thermometer-sun fs-1 text-danger"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="me-1">
+              <h6 class="mb-2 bsa-ellipsis-1">湿度</h6>
+              <div class="bd-highlight mb-3" id="d2">
+                <h4 class="mb-1 bsa-ellipsis-1 p-2 bd-highlight">25</h4>
+                <h5 class="p-2 bd-highlight"></h5>
+              </div>
+            </div>
+            <i class="bi bi-droplet-half fs-1 text-info"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="me-1">
+              <h6 class="mb-2 bsa-ellipsis-1">气压（atm）</h6>
+              <div class="bd-highlight mb-3" id="d3">
+                <h4 class="mb-1 bsa-ellipsis-1 p-2 bd-highlight">25</h4>
+                <h5 class="p-2 bd-highlight"></h5>
+              </div>
+            </div>
+            <i class="bi bi-speedometer fs-1 text-primary"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="me-1">
+              <h6 class="mb-2 bsa-ellipsis-1">光照（lx）</h6>
+              <div class="bd-highlight mb-3" id="d4">
+                <h4 class="mb-1 bsa-ellipsis-1 p-2 bd-highlight">25</h4>
+                <h5 class="p-2 bd-highlight"></h5>
+              </div>
+            </div>
+            <i class="bi bi-brightness-high-fill fs-1 text-success"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--回到顶部开始-->
+<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+<!--回到顶部结束-->
+
+<script src="{{ url_for('static', filename='lib/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/jquery/dist/jquery.min.js') }}"></script>
+{#<script src="{{ url_for('static', filename='lib/chart.js/dist/chart.umd.js') }}"></script>#}
+<script src="{{ url_for('static', filename='dist/js/bootstrap-admin.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/js/app.js') }}"></script>
+<script>
+    {#  根据id获取元素  #}
+    let d1 = document.getElementById("d1");
+    let d2 = document.getElementById("d2");
+    let d3 = document.getElementById("d3");
+    let d4 = document.getElementById("d4");
+    $(function(){
+        setInterval(function () {
+            $.get("http://127.0.0.1:5000/getsensor/", function(res){
+                d1.querySelector("h4").innerHTML = res.temp.data
+                d1.querySelector("h5").innerHTML = res.temp.date
+                d2.querySelector("h4").innerHTML = res.humid.data
+                d2.querySelector("h5").innerHTML = res.humid.date
+                d3.querySelector("h4").innerHTML = res.airp.data
+                d3.querySelector("h5").innerHTML = res.airp.date
+                d4.querySelector("h4").innerHTML = res.light.data
+                d4.querySelector("h5").innerHTML = res.light.date
+
+            })
+        },2000)
+    })
+</script>
+
+</body>
+</html>

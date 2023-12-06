@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="icon" href="{{ url_for('static', filename='dist/img/favicon-32x32.png') }}" sizes="32x32" type="image/png">
+  <link rel="icon" href="{{ url_for('static', filename='dist/img/favicon-16x16.png') }}" sizes="16x16" type="image/png">
+  <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+  <meta name="description" content="bootstrap-admin基于bootstrap5的免费开源的响应式后台管理模板">
+  <meta name="author" content="ajiho">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-icons/font/bootstrap-icons.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/dist/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/bootstrap-admin.min.css') }}">
+  <title>bootstrap-admin开源免费响应式后台管理系统模板</title>
+</head>
+<body class="bg-body-tertiary py-3">
+<div class="container-fluid">
+    <div class="row g-3">
+        <div class="col-lg-6" data-id="1">
+          <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center justify-content-between" data-id="1" style="cursor: pointer">
+                <div class="me-1" data-id="1">
+                  <h6 class="mb-2 bsa-ellipsis-1 " data-id="1">led-1</h6>
+                  <h4 class="mb-1 bsa-ellipsis-1" data-id="1">{{ res[0] }}</h4>
+                </div>
+                  {% if res[0] == '开' %}
+                    <i class="bi bi-lightbulb fs-1 text-warning" data-id="1"></i>
+                    {% else %}
+                    <i class="bi bi-lightbulb-off-fill fs-1" data-id="1"></i>
+                  {% endif %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6" data-id="2">
+          <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center justify-content-between" data-id="2"  style="cursor: pointer">
+                <div class="me-1" data-id="2">
+                  <h6 class="mb-2 bsa-ellipsis-1" data-id="2">led-2</h6>
+                  <h4 class="mb-1 bsa-ellipsis-1" data-id="2">{{ res[1] }}</h4>
+                </div>
+                {% if res[1] == '开' %}
+                    <i class="bi bi-lightbulb fs-1 text-warning" data-id="2"></i>
+                    {% else %}
+                    <i class="bi bi-lightbulb-off-fill fs-1" data-id="2"></i>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6" data-id="3">
+          <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center justify-content-between" data-id="3"  style="cursor: pointer">
+                <div class="me-1" data-id="3">
+                  <h6 class="mb-2 bsa-ellipsis-1" data-id="3">led-3</h6>
+                  <h4 class="mb-1 bsa-ellipsis-1" data-id="3">{{ res[2] }}</h4>
+                </div>
+                {% if res[2] == '开' %}
+                    <i class="bi bi-lightbulb fs-1 text-warning" data-id="3"></i>
+                    {% else %}
+                    <i class="bi bi-lightbulb-off-fill fs-1" data-id="3"></i>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6" data-id="4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between" data-id="4"  style="cursor: pointer">
+            <div class="me-1" data-id="4">
+              <h6 class="mb-2 bsa-ellipsis-1" data-id="4">led-4</h6>
+              <h4 class="mb-1 bsa-ellipsis-1" data-id="4">{{res[3]}}</h4>
+            </div>
+            {% if res[3] == '开' %}
+                <i class="bi bi-lightbulb fs-1 text-warning" data-id="4"></i>
+                {% else %}
+                <i class="bi bi-lightbulb-off-fill fs-1" data-id="4"></i>
+              {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="d-flex gap-2 flex-wrap" style="padding-top: 10px">
+        <button type="button" class="btn btn-success open">全部打开</button>
+        <button type="button" class="btn btn-danger close">全部关闭</button>
+        <button type="button" class="btn btn-info track">追踪模式</button>
+    </div>
+</div>
+
+<!--回到顶部开始-->
+<a href="javaScript:" class="bsa-back-to-top"><i class='bi bi-arrow-up-short'></i></a>
+<!--回到顶部结束-->
+
+<script src="{{ url_for('static', filename='lib/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/js/bootstrap-admin.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/js/app.js') }}"></script>
+<script>
+    $(function () {
+        {# 使用事件委托   #}
+        document.querySelector('.row').addEventListener('click', function (e) {
+            console.log(e.target)
+            if (e.target.classList.contains('d-flex')) {
+                let id = e.target.dataset.id;
+                let state
+                if (e.target.querySelector('.mb-1').innerHTML == '开') {
+                    e.target.querySelector('.bi').className = 'bi bi-lightbulb-off-fill fs-1';
+                    e.target.querySelector('.mb-1').innerHTML = '关';
+                    console.log(e.target)
+                    state = '0'
+                    console.log(id)
+
+                } else {
+                    e.target.querySelector('.bi').className = 'bi bi-lightbulb fs-1 text-warning';
+                    e.target.querySelector('.mb-1').innerHTML = '开';
+                    state = '1'
+                };
+                $.get("http://127.0.0.1:5000/controlled/", {id: id, state:state}, function (res) {
+                        console.log(res)
+
+                    })
+                }
+
+        });
+        document.querySelector('.open').addEventListener('click',function () {
+            $.get("http://127.0.0.1:5000/controlled", {id: '5', state: "1"} , function (res) {
+                console.log(res)
+                if (res.msg == 'ok'){
+                    document.querySelectorAll(".d-flex .bi").forEach(function (item) {
+                        item.className = 'bi bi-lightbulb fs-1 text-warning'
+                    })
+                    document.querySelectorAll(".mb-1").forEach(function (item) {
+                        item.innerHTML = '开'
+                    })
+                    Swal.fire({
+                        title: '打开成功',
+                        icon: 'success',
+                        showCancelButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+        })
+        document.querySelector('.close').addEventListener('click',function () {
+            $.get("http://127.0.0.1:5000/controlled", {id: '6', state: "0"} , function (res) {
+                console.log(res)
+                if (res.msg == 'ok'){
+                    document.querySelectorAll(".d-flex .bi").forEach(function (item) {
+                        item.className = 'bi bi-lightbulb-off-fill fs-1'
+                    })
+                    document.querySelectorAll(".mb-1").forEach(function (item) {
+                        item.innerHTML = '关'
+                    })
+                    Swal.fire({
+                        title: '关闭成功',
+                        icon: 'success',
+                        showCancelButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+        })
+        document.querySelector('.track').addEventListener('click',function () {
+            $.get("http://127.0.0.1:5000/controlled", {id: '7', state: "2"} , function (res) {
+                console.log(res)
+                if (res.msg == 'ok'){
+                    Swal.fire({
+                        title: '追踪模式设置成功',
+                        icon: 'success',
+                        showCancelButton: false,
+                        timer: 1500
+                    })
+                    {# 每隔1秒查询一次led灯状态 #}
+                    setInterval(function () {
+                        $.get("http://127.0.0.1:5000/track/", function (result) {
+                            console.log(result)
+                            document.querySelectorAll(".d-flex .bi").forEach(function (item, idx) {
+                                console.log(idx, result.res[idx])
+                                if (result.res[idx] == '开'){
+                                    item.className = 'bi bi-lightbulb fs-1 text-warning'
+                                }else{
+                                    item.className = 'bi bi-lightbulb-off-fill fs-1'
+                                }
+                            })
+                            document.querySelectorAll(".mb-1").forEach(function (item, idx) {
+                                item.innerHTML = result.res[idx]
+                            })
+                        })
+                    },1000)
+                }
+            })
+        })
+    })
+</script>
+
+</body>
+</html>
