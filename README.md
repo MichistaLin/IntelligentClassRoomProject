@@ -18,13 +18,13 @@
 
 进入SmartRoom文件夹，双击FinalWork.pdsprj会自动使用Proteus打开该工程，在原理图中双击Arduino328芯片
 
-![image-20231206145212410](README.assets\image-20231206145212410.png)
+![image-20231206145212410](README.assets/image-20231206145212410.png)
 
 进入编辑元件，修改ProgramFile为SmartRoom文件夹下的firmware.elf，点击确定
 
-![image-20231206145458555](README.assets\image-20231206145458555.png)
+![image-20231206145458555](README.assets/image-20231206145458555.png)
 
-![image-20231206145543407](README.assets\image-20231206145543407.png)
+![image-20231206145543407](README.assets/image-20231206145543407.png)
 
 最后点击左下角的运行按钮即可
 
@@ -42,23 +42,23 @@
 
 还不行的话，就在你的机器上新建一个Arduino328工程，把原理图里的元件拷贝到新工程里，然后把我们源代码复制到你的新工程的源代码中，运行即可。源代码由该同志提供 [yao9e](https://github.com/yao9e/HEUCSEmbedded)
 
-![image-20231206151258903](README.assets\image-20231206151258903.png)
+![image-20231206151258903](README.assets/image-20231206151258903.png)
 
 ## 项目展示
 
-后端控制台![image-20231206152117008](README.assets\image-20231206152117008.png)
+后端控制台![image-20231206152117008](README.assets/image-20231206152117008.png)
 
 前端页面
 
-![image-20231206152223002](README.assets\image-20231206152223002.png)
+![image-20231206152223002](README.assets/image-20231206152223002.png)
 
-![image-20231206152243314](README.assets\image-20231206152243314.png)
+![image-20231206152243314](README.assets/image-20231206152243314.png)
 
-![image-20231206152312430](README.assets\image-20231206152312430.png)
+![image-20231206152312430](README.assets/image-20231206152312430.png)
 
 每一个led卡片都是可点击的。
 
-![image-20231206152415498](README.assets\image-20231206152415498.png)
+![image-20231206152415498](README.assets/image-20231206152415498.png)
 
 总结：这个项目很简单，我们没有做很多功能，主要是练习上位机与下位机之间通过串口进行通信，以及下位机使用FreeRTOS进行多任务多线程处理。
 
