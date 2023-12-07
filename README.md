@@ -2,7 +2,7 @@
 
 ## 说明
 
-该项目是哈尔滨工程大学嵌入式系统设计的综合实验，下位机设计及源代码由该同志提供 [yao9e](https://github.com/yao9e/HEUCSEmbedded)，下位机相关问题可前往该链接查看。
+该项目是哈尔滨工程大学嵌入式系统设计的综合实验，下位机设计及源代码由该同志提供 [yao9e](https://github.com/yao9e/HEUCSEmbedded)，下位机相关问题（比如串口通信格式，FreeRTOS多任务）可前往该链接查看。
 
 使用的工具如下：
 
@@ -34,15 +34,15 @@
 
 ### 上位机
 
-使用pycharm打开IntelligentClassRoom文件夹，使用`pip install requirements`安装requirements.txt内的包，打开app.py，右键运行即可，数据库使用的是SQLite3，轻量轻便，它的数据就存在于`instance\sqlite3.db`中，如果这个文件没有丢失，那么你就不需要理会`数据迁移步骤.md`中的内容；如果它丢失了的话，那你就需要按照`数据迁移步骤.md`中的操作，把命令运行一遍以便进行数据迁移生成数据库。
+使用pycharm打开IntelligentClassRoom文件夹，使用`pip install requirements.txt`安装requirements.txt内的包，打开app.py，右键运行即可，数据库使用的是SQLite3，轻量轻便，它的数据就存在于`instance\sqlite3.db`中，如果这个文件没有丢失，那么你就不需要理会`数据迁移步骤.md`中的内容；如果它丢失了的话，那你就需要按照`数据迁移步骤.md`中的操作，把命令运行一遍以便进行数据迁移生成数据库。
 
 
 
-## Erro：下位机的数据传不到上位机怎么办
+## Error：下位机的数据传不到上位机怎么办
 
 极有可能是因为换了设备或者Proteus版本号不一致导致Proteus工程文件出了故障，你只需要在你的机器上新建一个Arduino328工程，把原理图里的元件拷贝到新工程里，然后Programfile仍然选择firmware.elf，在新工程里运行即可。
 
-还不行的话，就在你的机器上新建一个Arduino328工程，把原理图里的元件拷贝到新工程里，然后把我们源代码复制到你的新工程的源代码中，运行即可。源代码由该同志提供 [yao9e](https://github.com/yao9e/HEUCSEmbedded)
+还不行的话，就在你的机器上新建一个Arduino328工程，把原理图里的元件拷贝到新工程里，然后把我们的源代码复制到你的新工程的源代码中，运行即可。源代码由该同志提供 [yao9e](https://github.com/yao9e/HEUCSEmbedded)
 
 ![image-20231206151258903](README.assets/image-20231206151258903.png)
 
